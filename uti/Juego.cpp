@@ -23,6 +23,13 @@ Juego::Juego()
 
 Juego::~Juego()
 {
+	delete window;
+	delete submarino;
+
+	for (auto* i : enemigos)
+	{
+		delete i;
+	}
 }
 
 void Juego::run()
