@@ -2,6 +2,9 @@
 
 void Juego::initWindow()
 {
+	window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "Los panitas espaciales", sf::Style::Close | sf::Style::Fullscreen);
+	window->setFramerateLimit(60); // Limita los fps
+	window->setVerticalSyncEnabled(false); 	// Desactiva VSync para mejor rendimiento;
 }
 
 void Juego::initGUI()
@@ -62,4 +65,5 @@ void Juego::actualizarJuego()
 // Funcion que dibuja en la ventana
 void Juego::render()
 {
+	window->display();
 }
