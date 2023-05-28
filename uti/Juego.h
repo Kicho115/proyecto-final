@@ -39,5 +39,8 @@ public:
 	Juego();
 	~Juego();
 
+	// Funciones
+	void run();
+	void actualizarPollEvent();
 };
 
