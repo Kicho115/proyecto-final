@@ -362,9 +362,15 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-#proyecto-final.sln
-#proyecto-final.vcxproj
-#proyecto-final.vcxproj.filters
-#proyecto-final.vcxproj.user
+proyecto-final.sln
+proyecto-final.vcxproj
+proyecto-final.vcxproj.filters
+proyecto-final.vcxproj.user
 /uti/proyecto-final.vcxproj.filters
 /uti/proyecto-final.vcxproj
+
+External/
+
+*.dll
+
+Debug/
