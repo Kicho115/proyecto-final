@@ -22,8 +22,17 @@ Juego::~Juego()
 
 void Juego::run()
 {
-	while (window->isOpen()) {
+	while (window->isOpen())
+	{
+		// Funcion parra cerrar ventana
+		actualizarPollEvent();
+		
+		// Actualizar el juego si el jugador sigue con vida
+		if (submarino->getVida() > 0)
+			actualizarJuego();
 
+		// Funcion que dibuja en la ventana
+		render();
 	}
 }
 
@@ -41,4 +50,14 @@ void Juego::actualizarPollEvent()
 		if (e.sf::Event::KeyPressed && e.sf::Event::key.code == sf::Keyboard::Escape)
 			window->close();
 	}
+}
+
+// Actualiza el juego
+void Juego::actualizarJuego()
+{
+}
+
+// Funcion que dibuja en la ventana
+void Juego::render()
+{
 }
