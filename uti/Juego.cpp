@@ -14,6 +14,8 @@ void Juego::initSubmarino()
 
 Juego::Juego()
 {
+	initWindow();
+	initGUI();
 }
 
 Juego::~Juego()
