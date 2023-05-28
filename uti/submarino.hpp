@@ -1,5 +1,10 @@
 #include "Entidad.h"
 
+/*
+	Clase que controla el movimiento del jugador
+	y sus atributos.
+*/
+
 class Submarino : private Entidad
 {
 private:
