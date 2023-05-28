@@ -13,6 +13,7 @@ void Juego::initGUI()
 
 void Juego::initSubmarino()
 {
+	submarino = new Submarino;
 }
 
 Juego::Juego()
@@ -26,10 +27,10 @@ Juego::~Juego()
 	delete window;
 	delete submarino;
 
-	for (auto* i : enemigos)
+	/*for (auto* i : enemigos)
 	{
 		delete i;
-	}
+	}*/
 }
 
 void Juego::run()
