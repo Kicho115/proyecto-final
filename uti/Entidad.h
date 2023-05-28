@@ -1,4 +1,7 @@
 #pragma once
+
+#include <iostream>
+#include <SFML/Graphics.hpp>
 class Entidad
 {
 protected:
