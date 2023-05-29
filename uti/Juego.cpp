@@ -75,5 +75,11 @@ void Juego::actualizarJuego()
 // Funcion que dibuja en la ventana
 void Juego::render()
 {
+	// Limpiar el fotograma anterior
+	window->clear();
+
+	submarino->render(*window);
+
+	// Mostrar el fotograma actual
 	window->display();
 }
