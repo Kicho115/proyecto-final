@@ -1,11 +1,14 @@
 #pragma once
 
 #include "Entidad.h"
+#include "submarino.hpp"
 
 class Enemigo : private Entidad 
 {
 private:
 	int tipo;
+	float tiempoSpawnEnemigoMax;
+	float tiempoSpawnEnemigo;
 
 	sf::Texture textura;
 	sf::Sprite sprite;
@@ -20,11 +23,12 @@ public:
 
 	// Accesores
 	const sf::FloatRect getBounds() const;
+	const sf::Vector2f& getPos() const;
 	const int& getPuntos() const;
 	const int& getAtaque() const;
 
 	// Funcions
-	void movimiento();
+	void movimiento(Submarino& submarino);
 	void render(sf::RenderTarget* target);
 };
 
