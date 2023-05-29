@@ -67,6 +67,8 @@ void Submarino::perderVida(const int daño)
 {
 	// Se pierde vida en funcion a la cantidad de daño que se recibe
 	vida -= daño;
+	if (vida < 0)
+		vida = 0;
 }
 
 void Submarino::setPosicion(const float x, const float y)
