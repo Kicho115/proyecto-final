@@ -13,6 +13,8 @@ private:
 
 	sf::Texture textura;
 	sf::Sprite sprite;
+	// variable para detectar si el sprite esta invertido
+	bool spriteInvertido = false;
 
 	// Funciones init
 	void initVariables();

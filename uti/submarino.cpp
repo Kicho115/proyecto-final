@@ -8,7 +8,8 @@ void Submarino::initVariables()
 	ataqueCooldown = ataqueCooldownMax;
 	ataque = 10;
 	puntos = 0;
-	velocidad = 0.3f;
+	velocidad = 10.0f;
+	spriteInvertido = false;
 }
 
 void Submarino::initTextura()
@@ -86,12 +87,20 @@ void Submarino::movimiento()
 	// Cambia la la direccion del sprite en funcion de la direccion a la que se mueve
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
-		sprite.scale(-1.f, 1.f);
+		if (!spriteInvertido)
+		{
+			sprite.scale(-1.f, 1.f);
+			spriteInvertido = true;
+		}
 		sprite.move(-1.f * velocidad, 0.f);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
-		sprite.scale(1.f, 1.f);
+		if (spriteInvertido)
+		{
+			sprite.scale(-1.f, 1.f);
+			spriteInvertido = false;
+		}
 		sprite.move(1.f * velocidad, 0.f);
 	}
 }
