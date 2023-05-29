@@ -1,5 +1,10 @@
 #include "Juego.h"
 
+void Juego::initVariables()
+{
+	nivel = 0;
+}
+
 void Juego::initWindow()
 {
 	window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "Los panitas espaciales", sf::Style::Close | sf::Style::Fullscreen);
@@ -11,6 +16,11 @@ void Juego::initGUI()
 {
 }
 
+void Juego::initNivel()
+{
+	menu = new Nivel(0);
+}
+
 void Juego::initSubmarino()
 {
 	submarino = new Submarino;
@@ -20,6 +30,7 @@ Juego::Juego()
 {
 	initWindow();
 	initGUI();
+	initNivel();
 	initSubmarino();
 }
 
@@ -27,7 +38,7 @@ Juego::~Juego()
 {
 	delete window;
 	delete submarino;
-
+	delete menu;
 	/*for (auto* i : enemigos)
 	{
 		delete i;
@@ -78,6 +89,10 @@ void Juego::render()
 	// Limpiar el fotograma anterior
 	window->clear();
 
+	// Mostrar background
+	menu->render(*window);
+
+	// Mostrar submarino
 	submarino->render(*window);
 
 	// Mostrar el fotograma actual

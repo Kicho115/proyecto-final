@@ -14,11 +14,17 @@
 class Juego
 {
 private:
+	// Nivel en el que se encuentra
+	int nivel;
+
 	// Ventana de juego
 	sf::RenderWindow* window;
 
 	// Objeto submarino (jugador)
 	Submarino* submarino;
+
+	// Objeto Nivel
+	Nivel* menu;
 
 	// Enemigos
 	std::vector<Enemigo> enemigos;
@@ -32,9 +38,11 @@ private:
 	sf::Text gameOver;
 
 	// Funciones Init
+	void initVariables();
 	void initWindow();
 	void initGUI();
 
+	void initNivel();
 	void initSubmarino();
 public:
 	Juego();

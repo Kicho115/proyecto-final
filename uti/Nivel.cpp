@@ -33,6 +33,7 @@ void Nivel::initNivel(int nivel)
 
 	// Asigna la textura al sprite
 	backgroundSprite.setTexture(backgroundTexture);
+	music.play();
 }
 
 
