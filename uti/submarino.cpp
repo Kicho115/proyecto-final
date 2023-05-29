@@ -14,7 +14,7 @@ void Submarino::initVariables()
 void Submarino::initTextura()
 {
 	// Carga la textura desde un archivo
-	if (!textura.loadFromFile("recursos/imagenes/sub.png"))
+	if (!textura.loadFromFile("recursos/imagenes/submarino.png"))
 		std::cout << "Error: No se pudo cargar la textura de Jugador.\n";
 }
 
