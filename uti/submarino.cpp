@@ -26,6 +26,8 @@ void Submarino::initSprite()
 
 	// Escalar el sprite al tamaño deseado
 	sprite.scale(1.5f, 1.5f);
+
+	sprite.setPosition(960.f - sprite.getGlobalBounds().height/2, 540.f);
 }
 
 Submarino::Submarino()

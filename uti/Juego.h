@@ -48,6 +48,7 @@ public:
 	// Funciones
 	void run();
 	void actualizarPollEvent();
+	void actualizarNivel();
 	void actualizarJuego();
 	void render();
 };

@@ -65,6 +65,29 @@ void Nivel::setNivel(int nivel)
 	this->nivel = nivel;
 }
 
+void Nivel::actualizar()
+{
+	if (nivel == 1)
+	{
+		// Inicializa la textura del background
+		if (!backgroundTexture.loadFromFile("recursos/imagenes/fondo1.png"))
+			std::cout << "Error: No se pudo cargar el background del nivel 1\n";
+		// Inicializa la musica
+		if (!music.openFromFile("recursos/audio/musicLevel1.ogg"))
+			std::cout << "Error: No se pudo cargar la musica del nivel 1.\n";
+		music.play();
+	}
+	else if (nivel == 2)
+	{
+		// Inicializa la textura del background
+		if (!backgroundTexture.loadFromFile(""))
+			std::cout << "Error: No se pudo cargar el background del nivel 2.\n";
+		// Inicializa la musica
+		if (!music.openFromFile("recursos/audio/musicMenu"))
+			std::cout << "Error: No se pudo cargar la musica del nivel 2.\n";
+	}
+}
+
 void Nivel::render(sf::RenderTarget& target)
 {
 	target.draw(backgroundSprite);

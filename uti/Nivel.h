@@ -29,6 +29,7 @@ public:
 	void setNivel(int nivel);
 
 	// Funciones
+	void actualizar();
 	void render(sf::RenderTarget& target);
 };
 

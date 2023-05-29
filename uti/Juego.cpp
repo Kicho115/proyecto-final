@@ -27,6 +27,7 @@ void Juego::initSubmarino()
 
 Juego::Juego()
 {
+	initVariables();
 	initWindow();
 	initGUI();
 	initNivel();
@@ -76,15 +77,20 @@ void Juego::actualizarPollEvent()
 	}
 }
 
+void Juego::actualizarNivel()
+{
+	if (nivel->getNivel() == 0 && sf::Keyboard::isKeyPressed(sf::Keyboard::K))
+	{
+		nivel->setNivel(1);
+		nivel->actualizar();
+	}
+}
+
 // Actualiza el juego
 void Juego::actualizarJuego()
 {
-	if (nivel->getNivel() == 0)
-	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::K))
-			nivel->setNivel(1);
-	}
-
+	// Comprueba si se ha avanzado de nivel
+	actualizarNivel();
 	if(nivel->getNivel() != 0)
 		submarino->actualizar();
 }
