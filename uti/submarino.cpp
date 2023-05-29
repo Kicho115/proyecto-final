@@ -95,8 +95,19 @@ bool Submarino::puedeAtacar()
 		return false;
 }
 
+void Submarino::actualizarAtaque()
+{
+	if (ataqueCooldown < ataqueCooldownMax)
+		ataqueCooldown += 0.5f;
+}
+
 // Actualiza todo lo relacionado al jugador en el loop del juego
 void Submarino::actualizar()
 {
 	movimiento();
+}
+
+void Submarino::render(sf::RenderTarget& target)
+{
+	target.draw(sprite);
 }

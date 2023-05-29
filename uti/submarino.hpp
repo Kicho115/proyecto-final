@@ -37,6 +37,8 @@ public:
 	void movimiento(); // Mover al jugador
 	bool puedeAtacar(); // Revisa si no hay cooldown para atacar
 
+	void actualizarAtaque(); // Añade cooldown al ataque
 	void actualizar(); // Actualiza todo lo relacionado al jugador en el loop del juego
 
+	void render(sf::RenderTarget& target); // Renderiza el sprite
 };
