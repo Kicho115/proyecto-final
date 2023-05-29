@@ -64,9 +64,17 @@ void Submarino::setPosicion(const float x, const float y)
 	sprite.setPosition(x, y);
 }
 
-void Submarino::movimiento(const float dirX, const float dirY)
+void Submarino::movimiento()
 {
-	sprite.move(dirX * velocidad, dirY * velocidad);
+	// Mueve al jugador en funcion de la tecla presionada
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+		sprite.move(0.f, -1.f * velocidad);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		sprite.move(0.f, 1.f * velocidad);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		sprite.move(-1.f * velocidad, 0.f);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		sprite.move(1.f * velocidad, 0.f);
 }
 
 bool Submarino::puedeAtacar()

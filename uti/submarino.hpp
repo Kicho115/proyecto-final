@@ -34,7 +34,7 @@ public:
 
 	// Funciones
 	void setPosicion(const float x, const float y);
-	void movimiento(const float dirX, const float dirY); // Mover al jugador
+	void movimiento(); // Mover al jugador
 	bool puedeAtacar(); // Revisa si no hay cooldown para atacar
 
 };
