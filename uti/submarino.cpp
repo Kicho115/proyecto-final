@@ -94,3 +94,9 @@ bool Submarino::puedeAtacar()
 	}
 		return false;
 }
+
+// Actualiza todo lo relacionado al jugador en el loop del juego
+void Submarino::actualizar()
+{
+	movimiento();
+}
