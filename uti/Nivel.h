@@ -15,7 +15,10 @@ private:
 	// Funciones init
 	void initNivel(int nivel);
 public:
+	// Constructor / Destructor
 	Nivel(int nivel);
 	~Nivel();
+
+	void render(sf::RenderTarget& target);
 };
 
