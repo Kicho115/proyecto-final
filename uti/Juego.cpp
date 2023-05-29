@@ -2,7 +2,6 @@
 
 void Juego::initVariables()
 {
-	nivel = 0;
 }
 
 void Juego::initWindow()
@@ -18,7 +17,7 @@ void Juego::initGUI()
 
 void Juego::initNivel()
 {
-	menu = new Nivel(0);
+	nivel = new Nivel(0);
 }
 
 void Juego::initSubmarino()
@@ -38,7 +37,7 @@ Juego::~Juego()
 {
 	delete window;
 	delete submarino;
-	delete menu;
+	delete nivel;
 	/*for (auto* i : enemigos)
 	{
 		delete i;
@@ -80,7 +79,14 @@ void Juego::actualizarPollEvent()
 // Actualiza el juego
 void Juego::actualizarJuego()
 {
-	submarino->actualizar();
+	if (nivel->getNivel() == 0)
+	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::K))
+			nivel->setNivel(1);
+	}
+
+	if(nivel->getNivel() != 0)
+		submarino->actualizar();
 }
 
 // Funcion que dibuja en la ventana
@@ -90,10 +96,11 @@ void Juego::render()
 	window->clear();
 
 	// Mostrar background
-	menu->render(*window);
+	nivel->render(*window);
 
 	// Mostrar submarino
-	submarino->render(*window);
+	if(nivel->getNivel() != 0)
+		submarino->render(*window);
 
 	// Mostrar el fotograma actual
 	window->display();

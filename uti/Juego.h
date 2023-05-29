@@ -14,9 +14,6 @@
 class Juego
 {
 private:
-	// Nivel en el que se encuentra
-	int nivel;
-
 	// Ventana de juego
 	sf::RenderWindow* window;
 
@@ -24,7 +21,7 @@ private:
 	Submarino* submarino;
 
 	// Objeto Nivel
-	Nivel* menu;
+	Nivel* nivel;
 
 	// Enemigos
 	std::vector<Enemigo> enemigos;

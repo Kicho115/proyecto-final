@@ -8,17 +8,27 @@
 class Nivel
 {
 private:
+	int nivel;
+
 	sf::Texture backgroundTexture;
 	sf::Sprite backgroundSprite;
 	sf::Music music;
 
 	// Funciones init
-	void initNivel(int nivel);
+	void initVariables(int nivel);
+	void initNivel();
 public:
 	// Constructor / Destructor
 	Nivel(int nivel);
 	~Nivel();
 
+	// Accesores
+	int getNivel() const;
+
+	// Mutadores
+	void setNivel(int nivel);
+
+	// Funciones
 	void render(sf::RenderTarget& target);
 };
 

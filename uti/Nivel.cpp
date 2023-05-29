@@ -1,7 +1,12 @@
 #include "Nivel.h"
 
+void Nivel::initVariables(int nivel)
+{
+	this->nivel = nivel;
+}
+
 // Inicializa la textura del background y musica en funcion del nivel en el que se encuentre el juego
-void Nivel::initNivel(int nivel)
+void Nivel::initNivel()
 {
 	if (nivel == 0)
 	{
@@ -33,17 +38,31 @@ void Nivel::initNivel(int nivel)
 
 	// Asigna la textura al sprite
 	backgroundSprite.setTexture(backgroundTexture);
+
+	// Reproducir la musica infinitamente
 	music.play();
+	music.setLoop(true);
 }
 
 
 Nivel::Nivel(int nivel)
 {
-	initNivel(nivel);
+	initVariables(nivel);
+	initNivel();
 }
 
 Nivel::~Nivel()
 {
+}
+
+int Nivel::getNivel() const
+{
+	return nivel;
+}
+
+void Nivel::setNivel(int nivel)
+{
+	this->nivel = nivel;
 }
 
 void Nivel::render(sf::RenderTarget& target)
