@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Nivel.h"
 #include "submarino.hpp"
 #include "Enemigo.h"
 
