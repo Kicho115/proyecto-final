@@ -27,6 +27,8 @@ public:
 	// Accesores
 	int getVida();
 	int getVidaMax();
+	const sf::FloatRect getBounds() const; // Mustra el espacio que abarca el submarino
+	const sf::Vector2f getPos() const; // Muestra la posicion del submarino
 
 	// Mutadores
 	void setVida(const int vida);
@@ -36,6 +38,7 @@ public:
 	void setPosicion(const float x, const float y);
 	void movimiento(); // Mover al jugador
 	bool puedeAtacar(); // Revisa si no hay cooldown para atacar
+
 
 	void actualizarAtaque(); // Añade cooldown al ataque
 	void actualizar(); // Actualiza todo lo relacionado al jugador en el loop del juego

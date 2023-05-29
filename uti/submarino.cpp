@@ -48,6 +48,16 @@ int Submarino::getVidaMax()
 	return vidaMax;
 }
 
+const sf::FloatRect Submarino::getBounds() const
+{
+	return sprite.getGlobalBounds();
+}
+
+const sf::Vector2f Submarino::getPos() const
+{
+	return sprite.getPosition();
+}
+
 void Submarino::setVida(const int vida)
 {
 	this->vida = vida;
