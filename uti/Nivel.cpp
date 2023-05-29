@@ -9,7 +9,7 @@ void Nivel::initNivel(int nivel)
 		if (!backgroundTexture.loadFromFile("recursos/imagenes/fondo0.png"))
 			std::cout << "Error: No se pudo cargar el background del nivel 0.\n";
 		// Inicializa la musica
-		if (!music.openFromFile("recursos/audio/musicMenu/png"))
+		if (!music.openFromFile("recursos/audio/musicMenu.wav"))
 			std::cout << "Error: No se pudo cargar la musica del nivel 0.\n";
 	}
 	else if (nivel == 1)
