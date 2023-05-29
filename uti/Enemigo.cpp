@@ -3,8 +3,6 @@
 void Enemigo::initVariables(int tipo)
 {
 	this->tipo = tipo;
-	tiempoSpawnEnemigoMax = 50.f; // Tiempo que debe pasar para que haga spawn un enemigo
-	tiempoSpawnEnemigo = tiempoSpawnEnemigoMax;
 	
 	switch (tipo)
 	{
@@ -60,11 +58,13 @@ void Enemigo::initSprite()
 	sprite.setTexture(textura);
 }
 
-Enemigo::Enemigo(int tipo)
+Enemigo::Enemigo(int tipo, float posX, float posY)
 {
 	initVariables(tipo);
 	initTexture(tipo);
 	initSprite();
+
+	sprite.setPosition(posX, posY);
 }
 
 Enemigo::~Enemigo()

@@ -7,8 +7,6 @@ class Enemigo : private Entidad
 {
 private:
 	int tipo;
-	float tiempoSpawnEnemigoMax;
-	float tiempoSpawnEnemigo;
 
 	sf::Texture textura;
 	sf::Sprite sprite;
@@ -18,7 +16,7 @@ private:
 	void initTexture(int tipo);
 	void initSprite();
 public:
-	Enemigo(int tipo);
+	Enemigo(int tipo, float posX, float posY);
 	~Enemigo();
 
 	// Accesores
@@ -26,6 +24,7 @@ public:
 	const sf::Vector2f& getPos() const;
 	const int& getPuntos() const;
 	const int& getAtaque() const;
+
 
 	// Funcions
 	void movimiento(Submarino& submarino);
