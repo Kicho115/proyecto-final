@@ -71,10 +71,17 @@ void Submarino::movimiento()
 		sprite.move(0.f, -1.f * velocidad);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		sprite.move(0.f, 1.f * velocidad);
+	// Cambia la la direccion del sprite en funcion de la direccion a la que se mueve
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	{
+		sprite.scale(-1.f, 1.f);
 		sprite.move(-1.f * velocidad, 0.f);
+	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	{
+		sprite.scale(1.f, 1.f);
 		sprite.move(1.f * velocidad, 0.f);
+	}
 }
 
 bool Submarino::puedeAtacar()
