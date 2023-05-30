@@ -41,6 +41,7 @@ void Nivel::initNivel()
 
 	// Reproducir la musica infinitamente
 	music.play();
+	music.setVolume(30.f);
 	music.setLoop(true);
 }
 
