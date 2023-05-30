@@ -11,7 +11,7 @@ void Enemigo::initVariables(int tipo)
 		vida = vidaMax;
 		ataque = 10;
 		puntos = 10;
-		velocidad = 0.1f;
+		velocidad = 1.f;
 		break;
 	case 2:
 		vidaMax = 100;
@@ -102,12 +102,12 @@ void Enemigo::movimiento(Submarino* submarino)
 		sprite.move(-1.f * velocidad, 0.f);
 	
 	// Seguir submarino hacia arriba
-	if (submarino->getPos().x > getPos().y)
-		sprite.move(1.f * velocidad, 0.f);
+	if (submarino->getPos().y < getPos().y)
+		sprite.move(0.f, -1.f * velocidad);
 	
 	// Seguir submarino hacia abajo
-	if (submarino->getPos().x > getPos().y)
-		sprite.move(1.f * velocidad, 0.f);
+	if (submarino->getPos().y > getPos().y)
+		sprite.move(0.f, 1.f * velocidad);
 		
 }
 
