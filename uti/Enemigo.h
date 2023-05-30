@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Entidad.h"
+#include "submarino.hpp"
 
 class Enemigo : private Entidad
 {
@@ -26,6 +26,6 @@ public:
 
 
 	// Funcions
-	//void movimiento(Submarino& submarino);
+	void movimiento(Submarino* submarino);
 	void render(sf::RenderTarget* target);
 };

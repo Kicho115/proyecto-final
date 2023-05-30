@@ -22,7 +22,7 @@ void Juego::initNivel()
 
 void Juego::initSubmarino()
 {
-	submarino = new Submarino;
+	submarino = new Submarino();
 }
 
 Juego::Juego()

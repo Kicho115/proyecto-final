@@ -91,25 +91,25 @@ const int& Enemigo::getAtaque() const
 	return ataque;
 }
 
-//void Enemigo::movimiento(Submarino& submarino)
-/* {
+void Enemigo::movimiento(Submarino* submarino)
+{
 	// Seguir submarino hacia la derecha
-	if (submarino.getPos().x > getPos().x)
+	if (submarino->getPos().x > getPos().x)
 		sprite.move(1.f * velocidad, 0.f);
 
 	// Seguir submarino hacia la izquierda
-	if (submarino.getPos().x < getPos().x)
+	if (submarino->getPos().x < getPos().x)
 		sprite.move(-1.f * velocidad, 0.f);
 	
 	// Seguir submarino hacia arriba
-	if (submarino.getPos().x > getPos().y)
+	if (submarino->getPos().x > getPos().y)
 		sprite.move(1.f * velocidad, 0.f);
 	
 	// Seguir submarino hacia abajo
-	if (submarino.getPos().x > getPos().y)
+	if (submarino->getPos().x > getPos().y)
 		sprite.move(1.f * velocidad, 0.f);
 		
-}*/
+}
 
 void Enemigo::render(sf::RenderTarget* target)
 {
