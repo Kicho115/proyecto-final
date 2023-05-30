@@ -1,6 +1,6 @@
 #include "Juego.h"
 
-void Juego::initVariables()
+void Juego::initVariablesEnemigos()
 {
 }
 
@@ -27,7 +27,7 @@ void Juego::initSubmarino()
 
 Juego::Juego()
 {
-	initVariables();
+	initVariablesEnemigos();
 	initWindow();
 	initGUI();
 	initNivel();
@@ -51,7 +51,7 @@ void Juego::run()
 	{
 		// Funcion parra cerrar ventana
 		actualizarPollEvent();
-		
+
 		// Actualizar el juego si el jugador sigue con vida
 		if (this->submarino->getVida() > 0)
 			actualizarJuego();
@@ -86,12 +86,16 @@ void Juego::actualizarNivel()
 	}
 }
 
+void Juego::actualizarEnemigos()
+{
+}
+
 // Actualiza el juego
 void Juego::actualizarJuego()
 {
 	// Comprueba si se ha avanzado de nivel
 	actualizarNivel();
-	if(nivel->getNivel() != 0)
+	if (nivel->getNivel() != 0)
 		submarino->actualizar();
 }
 
@@ -105,7 +109,7 @@ void Juego::render()
 	nivel->render(*window);
 
 	// Mostrar submarino
-	if(nivel->getNivel() != 0)
+	if (nivel->getNivel() != 0)
 		submarino->render(*window);
 
 	// Mostrar el fotograma actual

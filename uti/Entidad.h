@@ -11,6 +11,7 @@ protected:
 	int puntos;
 	float velocidad;
 public:
+	//virtual ~Entidad();
 	//void setPosicion(const float x, const float y);
 };
 

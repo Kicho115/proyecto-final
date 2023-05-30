@@ -7,6 +7,10 @@
 
 int main()
 {
+
+	// Inicializar semilla para numero aleatorio
+	srand(static_cast<unsigned int>(time(0)));
+
 	Juego juego;
 
 	juego.run();

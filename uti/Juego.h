@@ -24,7 +24,9 @@ private:
 	Nivel* nivel;
 
 	// Enemigos
-	std::vector<Enemigo> enemigos;
+	float tiempoSpawnEnemigoMax;
+	float tiempoSpawnEnemigo;
+	std::vector<Enemigo*> enemigos;
 
 	// Interfaz de usuario (GUI)
 	sf::RectangleShape barraVidaMax;
@@ -35,7 +37,7 @@ private:
 	sf::Text gameOver;
 
 	// Funciones Init
-	void initVariables();
+	void initVariablesEnemigos();
 	void initWindow();
 	void initGUI();
 
@@ -49,6 +51,7 @@ public:
 	void run();
 	void actualizarPollEvent();
 	void actualizarNivel();
+	void actualizarEnemigos();
 	void actualizarJuego();
 	void render();
 };
