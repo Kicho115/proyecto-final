@@ -4,6 +4,7 @@
 #include "Enemigo.h"
 
 #include <vector>
+#include <sstream>
 
 /*
 	Clase que actua como motor de juego. 
@@ -29,8 +30,8 @@ private:
 	std::vector<Enemigo*> enemigos;
 
 	// Interfaz de usuario (GUI)
-	sf::RectangleShape barraVidaMax;
 	sf::RectangleShape barraVida;
+	sf::RectangleShape barraPerderVida;
 
 	sf::Font fuente;
 	sf::Text puntos;
@@ -60,7 +61,10 @@ public:
 	void actualizarPollEvent();
 	void actualizarNivel();
 	void actualizarEnemigos();
+	void actualizarGUI();
 	void actualizarJuego();
+
+	void renderGUI();
 	void render();
 };
 

@@ -44,6 +44,7 @@ public:
 	std::vector<Armas*> getBalasVector(); // Regresa el vector de balas
 	const sf::FloatRect getBounds() const; // Regresa el espacio que abarca el submarino
 	const sf::Vector2f getPos() const; // Regresa la posicion del submarino en la ventana
+	const bool getSpriteSentido() const;
 
 	// Mutadores
 	void setVida(const int vida);

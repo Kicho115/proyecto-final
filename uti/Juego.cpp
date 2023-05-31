@@ -16,6 +16,33 @@ void Juego::initWindow()
 
 void Juego::initGUI()
 {
+	// Cargar fuente
+	if(!fuente.loadFromFile("recursos/fuentes/fuente.otf"))
+		std::cout << "Error: No se ha cargado la fuente del texto en clase juego";
+
+	// Inicializar texto de los puntos del submarino
+	puntos.setFont(fuente);
+	puntos.setCharacterSize(40);
+	puntos.setFillColor(sf::Color::White);
+
+	// Inicializar texto de game over
+	gameOver.setFont(fuente);
+	gameOver.setCharacterSize(100);
+	gameOver.setFillColor(sf::Color::Red);
+	gameOver.setString("Game Over");
+
+	// Posicion de texto de game over
+	int x = window->getSize().x / 2.f - gameOver.getGlobalBounds().width / 2;
+	int y = window->getSize().y / 2.f - gameOver.getGlobalBounds().height / 2;
+	gameOver.setPosition(x, y);
+
+	// Inicializar barra de vida de submarino
+	barraVida.setSize(sf::Vector2f(300.f, 25.f));
+	barraVida.setFillColor(sf::Color::Red);
+	barraVida.setPosition(sf::Vector2f(50.f, 65.f));
+
+	barraPerderVida = barraVida;
+	barraPerderVida.setFillColor(sf::Color(25, 25, 25, 200));
 }
 
 void Juego::initSonido()
@@ -85,7 +112,7 @@ void Juego::actualizarPollEvent()
 
 	while (window->pollEvent(e))
 	{
-		// Cerrar ventana al presionar X en la esquina
+		// Cerrar ventana al presionar X en la esquina en modo ventana
 		if (e.Event::type == sf::Event::Closed)
 			window->close();
 		// Cerrar ventana al presionar tecla escape
@@ -163,6 +190,28 @@ void Juego::actualizarEnemigos()
 
 }
 
+void Juego::actualizarGUI()
+{
+	std::stringstream ss;
+	// Actualizar string de puntos
+	ss << "Points: " << submarino->getPuntos()
+		<< "\nHp: ";
+
+	// Mostrar puntos en pantalla
+	puntos.setString(ss.str());
+
+	// Actualizar Barra de vida
+	float hpPercent = static_cast<float>(submarino->getVida()) / submarino->getVidaMax();
+	barraVida.setSize(sf::Vector2f(300.f * hpPercent, barraVida.getSize().y));
+
+	// Hacer que la barra de vida siga al jugador
+	//int x = submarino->getPos().x - submarino->getBounds().width;
+	//int y = submarino->getPos().y - submarino->getBounds().height;
+
+	//barraVida.setPosition(x, y);
+	//barraPerderVida.setPosition(barraVida.getPosition());
+}
+
 // Actualiza el juego
 void Juego::actualizarJuego()
 {
@@ -171,8 +220,16 @@ void Juego::actualizarJuego()
 	if (nivel->getNivel() != 0)
 	{
 		submarino->actualizar();
+		actualizarGUI();
 		actualizarEnemigos();
 	}
+}
+
+void Juego::renderGUI()
+{
+	window->draw(puntos);
+	window->draw(barraPerderVida);
+	window->draw(barraVida);
 }
 
 // Funcion que dibuja en la ventana
@@ -187,6 +244,8 @@ void Juego::render()
 	// Mostrar submarino
 	if (nivel->getNivel() != 0)
 	{
+		renderGUI();
+
 		submarino->render(*window);
 		
 		for (auto* enemigo : enemigos)
