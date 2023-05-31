@@ -18,7 +18,7 @@ private:
 	sf::Sprite sprite;
 
 	// variable para detectar si el sprite esta invertido
-	bool spriteInvertido = false;
+	
 
 	// Armas (balas)
 	std::map<std::string, sf::Texture*> texturaBalas;

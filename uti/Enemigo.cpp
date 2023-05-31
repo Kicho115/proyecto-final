@@ -3,25 +3,25 @@
 void Enemigo::initVariables(int tipo)
 {
 	this->tipo = tipo;
+
+	spriteInvertido = false;
+	vida = vidaMax;
 	
 	switch (tipo)
 	{
 	case 1:
 		vidaMax = 30;
-		vida = vidaMax;
 		ataque = 10;
 		puntos = 10;
 		velocidad = 1.f;
 		break;
 	case 2:
 		vidaMax = 100;
-		vida = vidaMax;
 		ataque = 20;
 		puntos = 20;
 		velocidad = 0.2f;
 	case 3:
 		vidaMax = 200;
-		vida = vidaMax;
 		ataque = 30;
 		puntos = 30;
 		velocidad = 0.3f;
@@ -95,11 +95,25 @@ void Enemigo::movimiento(Submarino* submarino)
 {
 	// Seguir submarino hacia la derecha
 	if (submarino->getPos().x > getPos().x)
+	{
+		if (spriteInvertido)
+		{
+			sprite.scale(-1.f, 1.f);
+			spriteInvertido = false;
+		}
 		sprite.move(1.f * velocidad, 0.f);
+	}
 
 	// Seguir submarino hacia la izquierda
 	if (submarino->getPos().x < getPos().x)
+	{
+		if (!spriteInvertido)
+		{
+			sprite.scale(-1.f, 1.f);
+			spriteInvertido = true;
+		}
 		sprite.move(-1.f * velocidad, 0.f);
+	}
 	
 	// Seguir submarino hacia arriba
 	if (submarino->getPos().y < getPos().y)
