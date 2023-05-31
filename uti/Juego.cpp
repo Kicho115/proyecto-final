@@ -23,6 +23,10 @@ void Juego::initSonido()
 	if (!golpeBuffer.loadFromFile("recursos/audio/golpeSubmarino.wav"))
 		std::cout << "Error: No se ha cargado el audio para los golpes al submarino.\n";
 	golpeSonido.setBuffer(golpeBuffer);
+
+	if (!enemigoMuertoBuffer.loadFromFile("recursos/audio/golpeEnemigo.wav"))
+		std::cout << "Error: No se ha cargado el audio para los golpes al enemigo.\n";
+	enemigoMuertoSonido.setBuffer(enemigoMuertoBuffer);
 }
 
 void Juego::initNivel()
@@ -116,7 +120,6 @@ void Juego::actualizarEnemigos()
 
 		enemigo->movimiento(submarino);
 
-		bool enemigoMuerto = false;
 
 		if (enemigo->getBounds().intersects(submarino->getBounds()))
 		{
@@ -132,8 +135,7 @@ void Juego::actualizarEnemigos()
 	
 			std::cout << enemigos.size() << "\n";
 		}
-		else
-		{
+		
 			// Eliminar enemigo y bala si intersectan
 			for (int i = 0; i < enemigos.size(); i++)
 			{
@@ -143,19 +145,19 @@ void Juego::actualizarEnemigos()
 				{
 					if (enemigos[i]->getBounds().intersects(submarino->getBalasVector()[j]->getBounds()))
 					{
+						enemigoMuertoSonido.play();
 						submarino->setPuntos(enemigos[i]->getPuntos());
 
 						delete enemigos[i];
 						enemigos.erase(enemigos.begin() + i);
-						std::cout << "Enemigo eliminado\n";
+						//std::cout << "Enemigo eliminado\n";
 
 						submarino->setBalasVector(j); // Eliminar balas
-						std::cout << "Sub eliminado\n";
+						//std::cout << "Sub eliminado\n";
 						enemigoMuerto = true;
 					}
 				}
 			}
-		}
 		++cont;
 	}
 

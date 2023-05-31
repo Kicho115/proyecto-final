@@ -56,6 +56,8 @@ void Enemigo::initTexture(int tipo)
 void Enemigo::initSprite()
 {
 	sprite.setTexture(textura);
+	if (tipo == 1)
+		sprite.setScale(0.17f, 0.17f);
 }
 
 Enemigo::Enemigo(int tipo, float posX, float posY)

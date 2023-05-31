@@ -40,6 +40,9 @@ private:
 	sf::SoundBuffer golpeBuffer;
 	sf::Sound golpeSonido;
 
+	sf::SoundBuffer enemigoMuertoBuffer;
+	sf::Sound enemigoMuertoSonido;
+
 	// Funciones Init
 	void initVariablesEnemigos();
 	void initWindow();
