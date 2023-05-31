@@ -78,6 +78,16 @@ int Submarino::getVidaMax()
 	return vidaMax;
 }
 
+int Submarino::getPuntos()
+{
+	return puntos;
+}
+
+std::vector<Armas*> Submarino::getBalasVector()
+{
+	return balas;
+}
+
 const sf::FloatRect Submarino::getBounds() const
 {
 	return sprite.getGlobalBounds();
@@ -93,12 +103,24 @@ void Submarino::setVida(const int vida)
 	this->vida = vida;
 }
 
+void Submarino::setPuntos(int puntos)
+{
+	this->puntos += puntos;
+}
+
 void Submarino::perderVida(const int daño)
 {
 	// Se pierde vida en funcion a la cantidad de daño que se recibe
 	vida -= daño;
 	if (vida < 0)
 		vida = 0;
+}
+
+void Submarino::setBalasVector(int i)
+{
+	delete balas[i];
+	balas.erase(balas.begin() + i);
+
 }
 
 void Submarino::setPosicion(const float x, const float y)

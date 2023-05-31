@@ -17,9 +17,6 @@ private:
 	sf::Texture textura;
 	sf::Sprite sprite;
 
-	// variable para detectar si el sprite esta invertido
-	
-
 	// Armas (balas)
 	std::map<std::string, sf::Texture*> texturaBalas;
 	std::vector<Armas*> balas;
@@ -38,17 +35,21 @@ private:
 public:
 	// Constructor / Destructor
 	Submarino();
-	virtual ~Submarino();
+	virtual ~Submarino(); 
 
 	// Accesores
 	int getVida();
 	int getVidaMax();
-	const sf::FloatRect getBounds() const; // Mustra el espacio que abarca el submarino
-	const sf::Vector2f getPos() const; // Muestra la posicion del submarino
+	int getPuntos();
+	std::vector<Armas*> getBalasVector(); // Regresa el vector de balas
+	const sf::FloatRect getBounds() const; // Regresa el espacio que abarca el submarino
+	const sf::Vector2f getPos() const; // Regresa la posicion del submarino en la ventana
 
 	// Mutadores
 	void setVida(const int vida);
+	void setPuntos(int puntos);
 	void perderVida(const int daño); // Resta vida, se llama al recibir daño
+	void setBalasVector(int i); // Eliminar elementos del vector
 
 	// Funciones
 	void setPosicion(const float x, const float y);

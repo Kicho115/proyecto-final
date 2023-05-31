@@ -116,6 +116,8 @@ void Juego::actualizarEnemigos()
 
 		enemigo->movimiento(submarino);
 
+		bool enemigoMuerto = false;
+
 		if (enemigo->getBounds().intersects(submarino->getBounds()))
 		{
 			//Reproducir sonido de golpe
@@ -130,8 +132,33 @@ void Juego::actualizarEnemigos()
 	
 			std::cout << enemigos.size() << "\n";
 		}
+		else
+		{
+			// Eliminar enemigo y bala si intersectan
+			for (int i = 0; i < enemigos.size(); i++)
+			{
+				bool enemigoMuerto = false;
+
+				for (size_t j = 0; j < submarino->getBalasVector().size() && !enemigoMuerto; j++)
+				{
+					if (enemigos[i]->getBounds().intersects(submarino->getBalasVector()[j]->getBounds()))
+					{
+						submarino->setPuntos(enemigos[i]->getPuntos());
+
+						delete enemigos[i];
+						enemigos.erase(enemigos.begin() + i);
+						std::cout << "Enemigo eliminado\n";
+
+						submarino->setBalasVector(j); // Eliminar balas
+						std::cout << "Sub eliminado\n";
+						enemigoMuerto = true;
+					}
+				}
+			}
+		}
 		++cont;
 	}
+
 }
 
 // Actualiza el juego
