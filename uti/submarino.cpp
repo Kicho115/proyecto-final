@@ -225,7 +225,7 @@ void Submarino::actualizarAtaque()
 void Submarino::colision()
 {
 	// Colision con la izquierda de la pantalla
-	if (getBounds().left < 1.f)
+	if (getBounds().left < 0.f)
 	{
 		sprite.setPosition(getBounds().width + 1.f, getBounds().top);
 	}
