@@ -59,6 +59,7 @@ void Juego::initSonido()
 void Juego::initNivel()
 {
 	nivel = new Nivel(0);
+	pecesAsesinados = 0;
 }
 
 void Juego::initSubmarino()
@@ -126,8 +127,26 @@ void Juego::actualizarNivel()
 	if (nivel->getNivel() == 0 && sf::Keyboard::isKeyPressed(sf::Keyboard::K))
 	{
 		nivel->setNivel(1);
-		nivel->actualizar();
+		nivel->initNivel(1);
 	}
+	else if (nivel->getNivel() == 1 && pecesAsesinados == 20)
+	{
+		nivel->setNivel(2);
+		nivel->initNivel(2);
+
+		enemigos.clear();
+		submarino->setVida(100);
+
+	}
+	else if (nivel->getNivel() == 2 && pecesAsesinados == 50)
+	{
+		nivel->setNivel(3);
+		nivel->initNivel(3);
+
+		enemigos.clear();
+		submarino->setVida(100);
+	}
+
 }
 
 void Juego::actualizarEnemigos()
@@ -136,7 +155,11 @@ void Juego::actualizarEnemigos()
 	tiempoSpawnEnemigo += 0.5f;
 	if (tiempoSpawnEnemigo >= tiempoSpawnEnemigoMax)
 	{
-		enemigos.push_back(new Enemigo(1, static_cast<float>(rand() % 1920), static_cast<float>(rand() % 1920)));
+		enemigos.push_back(new Enemigo(nivel->getNivel(), 1920 + static_cast<float>(rand() % 100), 1080 + static_cast<float>(rand() % 540)));
+		enemigos.push_back(new Enemigo(nivel->getNivel(), 0 - static_cast<float>(rand() % 900), 0 - static_cast<float>(rand() % 100)));
+		enemigos.push_back(new Enemigo(nivel->getNivel(), 1920 + static_cast<float>(rand() % 100), 1080 - static_cast<float>(rand() % 540)));
+		enemigos.push_back(new Enemigo(nivel->getNivel(), 0 - static_cast<float>(rand() % 900), 0 + static_cast<float>(rand() % 100)));
+
 		tiempoSpawnEnemigo = 0.f;
 	}
 
@@ -182,6 +205,7 @@ void Juego::actualizarEnemigos()
 						submarino->setBalasVector(j); // Eliminar balas
 						//std::cout << "Sub eliminado\n";
 						enemigoMuerto = true;
+						pecesAsesinados++;
 					}
 				}
 			}
@@ -195,7 +219,7 @@ void Juego::actualizarGUI()
 	std::stringstream ss;
 	// Actualizar string de puntos
 	ss << "Points: " << submarino->getPuntos()
-		<< "\nHp: ";
+		<< "\nHp: " << "\nPeces cazados: " << pecesAsesinados << " / " << "20";
 
 	// Mostrar puntos en pantalla
 	puntos.setString(ss.str());
@@ -233,7 +257,7 @@ void Juego::renderGUI()
 	window->draw(barraVida);
 }
 
-// Funcion que dibuja en la ventana
+/// Funcion que dibuja en la ventana
 void Juego::render()
 {
 	// Limpiar el fotograma anterior
@@ -248,13 +272,19 @@ void Juego::render()
 		renderGUI();
 
 		submarino->render(*window);
-		
+
 		for (auto* enemigo : enemigos)
 		{
 			enemigo->render(window);
 		}
 
 		submarino->renderBala(window);
+	}
+
+	// Mostrar game over si se muere
+	if (submarino->getVida() <= 0)
+	{
+		window->draw(gameOver);
 	}
 
 	// Mostrar el fotograma actual

@@ -20,9 +20,10 @@ private:
 	// Objeto submarino (jugador)
 	Submarino* submarino;
 
-	// Objeto Nivel
+	// Nivel
 	Nivel* nivel;
 
+	int pecesAsesinados;
 
 	// Enemigos
 	float tiempoSpawnEnemigoMax;
@@ -35,6 +36,7 @@ private:
 
 	sf::Font fuente;
 	sf::Text puntos;
+	sf::Text peces;
 	sf::Text gameOver;
 
 	// Efectos de sonido
@@ -43,6 +45,9 @@ private:
 
 	sf::SoundBuffer enemigoMuertoBuffer;
 	sf::Sound enemigoMuertoSonido;
+
+	// Ayuda para intro
+	int i;
 
 	// Funciones Init
 	void initVariablesEnemigos();

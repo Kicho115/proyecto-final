@@ -19,12 +19,13 @@ void Enemigo::initVariables(int tipo)
 		vidaMax = 100;
 		ataque = 20;
 		puntos = 20;
-		velocidad = 0.2f;
+		velocidad = 5.f;
+		break;
 	case 3:
 		vidaMax = 200;
 		ataque = 30;
 		puntos = 30;
-		velocidad = 0.3f;
+		velocidad = 10.f;
 		break;
 	default:
 		std::cout << "Error: No se ha podido inicializar las variables de la clase Enemigo\n";
@@ -43,6 +44,7 @@ void Enemigo::initTexture(int tipo)
 	case 2:
 		if (!textura.loadFromFile("recursos/imagenes/enemigoTipo2.png"))
 			std::cout << "Error: No se ha podido cargar la textura del enemigo tipo 2\n";
+		break;
 	case 3:
 		if (!textura.loadFromFile("recursos/imagenes/enemigoTipo3.png"))
 			std::cout << "Error: No se ha podido cargar la textura del enemigo tipo 3\n";

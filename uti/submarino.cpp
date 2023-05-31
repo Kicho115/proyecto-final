@@ -8,7 +8,7 @@ void Submarino::initVariables()
 	ataqueCooldown = ataqueCooldownMax;
 	ataque = 10;
 	puntos = 0;
-	velocidad = 10.0f;
+	velocidad = 5.0f;
 	spriteInvertido = false;
 }
 

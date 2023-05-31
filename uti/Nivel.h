@@ -16,7 +16,6 @@ private:
 
 	// Funciones init
 	void initVariables(int nivel);
-	void initNivel();
 public:
 	// Constructor / Destructor
 	Nivel(int nivel);
@@ -29,7 +28,7 @@ public:
 	void setNivel(int nivel);
 
 	// Funciones
-	void actualizar();
 	void render(sf::RenderTarget& target);
+	void initNivel(int nivel);
 };
 
