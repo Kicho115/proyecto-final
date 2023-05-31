@@ -1,4 +1,7 @@
 #include "Entidad.h"
+#include "Armas.h"
+
+#include <SFML/Audio.hpp>
 
 /*
 	Clase que controla el movimiento del jugador
@@ -13,12 +16,23 @@ private:
 
 	sf::Texture textura;
 	sf::Sprite sprite;
+
 	// variable para detectar si el sprite esta invertido
 	bool spriteInvertido = false;
+
+	// Armas (balas)
+	std::map<std::string, sf::Texture*> texturaBalas;
+	std::vector<Armas*> balas;
+
+	// Sonido de armas
+	sf::SoundBuffer balaBuffer;
+	sf::Sound balaSonido;
 
 	// Funciones init
 	void initVariables();
 	void initTextura();
+	void initTexturaBalas();
+	void initSonido();
 	void initSprite();
 
 public:
@@ -38,11 +52,13 @@ public:
 
 	// Funciones
 	void setPosicion(const float x, const float y);
-	void movimiento(); // Mover al jugador
+	void acciones(); // Mover al jugador
 	bool puedeAtacar(); // Revisa si no hay cooldown para atacar
-
+	
+	void actualizarBala(); // Mueve a la bala a traves de la pantalla y la elimina al salir de ella
 	void actualizarAtaque(); // Añade cooldown al ataque
 	void actualizar(); // Actualiza todo lo relacionado al jugador en el loop del juego
 
+	void renderBala(sf::RenderTarget* target); // Renderiza la bala
 	void render(sf::RenderTarget& target); // Renderiza el sprite
 };

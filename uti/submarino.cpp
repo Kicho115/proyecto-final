@@ -19,6 +19,21 @@ void Submarino::initTextura()
 		std::cout << "Error: No se pudo cargar la textura de Jugador.\n";
 }
 
+void Submarino::initTexturaBalas()
+{
+	// Valor de la key sera una textura
+	texturaBalas["bala"] = new sf::Texture;
+	// Carga la textura
+	texturaBalas["bala"]->loadFromFile("recursos/imagenes/bala.png");
+}
+
+void Submarino::initSonido()
+{
+	if (!balaBuffer.loadFromFile("recursos/audio/bala.wav"))
+		std::cout << "Error: No se ha podido cargar el audio de las balas en clase submarino.\n";
+	balaSonido.setBuffer(balaBuffer);
+}
+
 void Submarino::initSprite()
 {
 	// Asignar textura a sprite
@@ -34,11 +49,23 @@ Submarino::Submarino()
 {
 	initVariables();
 	initTextura();
+	initTexturaBalas();
+	initSonido();
 	initSprite();
 }
 
 Submarino::~Submarino()
 {
+	// Eliminar textura de balas en map
+	for (auto& i : texturaBalas)
+	{
+		delete i.second;
+	}
+	// Eliminar objeto arma en vector
+	for (auto* i : balas)
+	{
+		delete i;
+	}
 }
 
 int Submarino::getVida()
@@ -79,13 +106,14 @@ void Submarino::setPosicion(const float x, const float y)
 	sprite.setPosition(x, y);
 }
 
-void Submarino::movimiento()
+void Submarino::acciones()
 {
 	// Mueve al jugador en funcion de la tecla presionada
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		sprite.move(0.f, -1.f * velocidad);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		sprite.move(0.f, 1.f * velocidad);
+
 	// Cambia la la direccion del sprite en funcion de la direccion a la que se mueve
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
@@ -105,6 +133,27 @@ void Submarino::movimiento()
 		}
 		sprite.move(1.f * velocidad, 0.f);
 	}
+
+	// Crea balas
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && puedeAtacar())
+	{
+		int y = getPos().y + getBounds().height / 2.f;
+
+		balaSonido.setVolume(30.f);
+		balaSonido.play();
+
+		if (!spriteInvertido)
+		{
+			int x = getPos().x + getBounds().width;
+			balas.push_back(new Armas(texturaBalas["bala"], x, y, 1.f, 0.f, 15.f));
+		}
+		else
+		{
+			int x = getPos().x - getBounds().width;
+			balas.push_back(new Armas(texturaBalas["bala"], x, y, -1.f, 0.f, 15.f));
+		}
+	}
+
 }
 
 bool Submarino::puedeAtacar()
@@ -118,6 +167,28 @@ bool Submarino::puedeAtacar()
 	return false;
 }
 
+void Submarino::actualizarBala()
+{
+	for (auto* bala : balas)
+	{
+		unsigned cont = 0;
+
+		bala->movimiento();
+
+		// Si la bala se sale de los limites de la ventana
+		if (bala->getBounds().top + bala->getBounds().height < 0.f)
+		{
+			// Elimina la bala en la posicion cont del vector
+			delete balas.at(cont); 
+			balas.erase(balas.begin() + cont);
+			--cont;
+
+			std::cout << "balas: " << balas.size() << "\n";
+		}
+		++cont;
+	}
+}
+
 void Submarino::actualizarAtaque()
 {
 	if (ataqueCooldown < ataqueCooldownMax)
@@ -127,7 +198,17 @@ void Submarino::actualizarAtaque()
 // Actualiza todo lo relacionado al jugador en el loop del juego
 void Submarino::actualizar()
 {
-	movimiento();
+	acciones();
+	actualizarAtaque();
+	actualizarBala();
+}
+
+void Submarino::renderBala(sf::RenderTarget* target)
+{
+	for (auto* bala : balas)
+	{
+		bala->render(target);
+	}
 }
 
 void Submarino::render(sf::RenderTarget& target)

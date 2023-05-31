@@ -22,6 +22,7 @@ private:
 	// Objeto Nivel
 	Nivel* nivel;
 
+
 	// Enemigos
 	float tiempoSpawnEnemigoMax;
 	float tiempoSpawnEnemigo;
@@ -35,10 +36,15 @@ private:
 	sf::Text puntos;
 	sf::Text gameOver;
 
+	// Efectos de sonido
+	sf::SoundBuffer golpeBuffer;
+	sf::Sound golpeSonido;
+
 	// Funciones Init
 	void initVariablesEnemigos();
 	void initWindow();
 	void initGUI();
+	void initSonido();
 
 	void initNivel();
 	void initSubmarino();

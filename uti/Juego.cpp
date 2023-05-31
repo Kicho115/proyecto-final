@@ -2,7 +2,10 @@
 
 void Juego::initVariablesEnemigos()
 {
+	tiempoSpawnEnemigoMax = 50.f;
+	tiempoSpawnEnemigo = tiempoSpawnEnemigoMax;
 }
+
 
 void Juego::initWindow()
 {
@@ -15,6 +18,13 @@ void Juego::initGUI()
 {
 }
 
+void Juego::initSonido()
+{
+	if (!golpeBuffer.loadFromFile("recursos/audio/golpeSubmarino.wav"))
+		std::cout << "Error: No se ha cargado el audio para los golpes al submarino.\n";
+	golpeSonido.setBuffer(golpeBuffer);
+}
+
 void Juego::initNivel()
 {
 	nivel = new Nivel(0);
@@ -22,7 +32,7 @@ void Juego::initNivel()
 
 void Juego::initSubmarino()
 {
-	submarino = new Submarino();
+	submarino = new Submarino;
 }
 
 Juego::Juego()
@@ -30,6 +40,7 @@ Juego::Juego()
 	initVariablesEnemigos();
 	initWindow();
 	initGUI();
+	initSonido();
 	initNivel();
 	initSubmarino();
 }
@@ -39,10 +50,12 @@ Juego::~Juego()
 	delete window;
 	delete submarino;
 	delete nivel;
-	/*for (auto* i : enemigos)
+	
+	// Borrar enemigos en vector
+	for (auto* i : enemigos)
 	{
 		delete i;
-	}*/
+	}
 }
 
 void Juego::run()
@@ -88,6 +101,37 @@ void Juego::actualizarNivel()
 
 void Juego::actualizarEnemigos()
 {
+	// Spawnear enemigo si el cooldown es mayor al cooldown maximo
+	tiempoSpawnEnemigo += 0.5f;
+	if (tiempoSpawnEnemigo >= tiempoSpawnEnemigoMax)
+	{
+		enemigos.push_back(new Enemigo(1, static_cast<float>(rand() % 1920), static_cast<float>(rand() % 1920)));
+		tiempoSpawnEnemigo = 0.f;
+	}
+
+	// Eliminar enemigos
+	unsigned cont = 0;
+	for (auto* enemigo : enemigos)
+	{
+
+		enemigo->movimiento(submarino);
+
+		if (enemigo->getBounds().intersects(submarino->getBounds()))
+		{
+			//Reproducir sonido de golpe
+			golpeSonido.play();
+
+			// Perder vida en funcion del ataque del enemigo
+			submarino->perderVida(enemigos.at(cont)->getAtaque());
+
+			// Delete enemigo si toca el submarino
+			delete enemigos.at(cont);
+			enemigos.erase(enemigos.begin() + cont);
+	
+			std::cout << enemigos.size() << "\n";
+		}
+		++cont;
+	}
 }
 
 // Actualiza el juego
@@ -96,7 +140,10 @@ void Juego::actualizarJuego()
 	// Comprueba si se ha avanzado de nivel
 	actualizarNivel();
 	if (nivel->getNivel() != 0)
+	{
 		submarino->actualizar();
+		actualizarEnemigos();
+	}
 }
 
 // Funcion que dibuja en la ventana
@@ -110,7 +157,16 @@ void Juego::render()
 
 	// Mostrar submarino
 	if (nivel->getNivel() != 0)
+	{
 		submarino->render(*window);
+		
+		for (auto* enemigo : enemigos)
+		{
+			enemigo->render(window);
+		}
+
+		submarino->renderBala(window);
+	}
 
 	// Mostrar el fotograma actual
 	window->display();
