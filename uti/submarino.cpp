@@ -222,6 +222,33 @@ void Submarino::actualizarAtaque()
 		ataqueCooldown += 0.5f;
 }
 
+void Submarino::colision()
+{
+	// Colision con la izquierda de la pantalla
+	if (getBounds().left < 1.f)
+	{
+		sprite.setPosition(getBounds().width + 1.f, getBounds().top);
+	}
+
+	// Colision con la derecha
+	if (getBounds().left + getBounds().width > 1920.f)
+	{
+		sprite.setPosition(1919.f - getBounds().width, getBounds().top);
+	}
+
+	// Colision con el tope
+	if (getBounds().top < 0.f)
+	{
+		sprite.setPosition(getBounds().left, 1.f);
+	}
+
+	// Colision con el fondo
+	if (getBounds().top + getBounds().height >= 1080.f)
+	{
+		sprite.setPosition(getBounds().left, 1079.f - getBounds().height);
+	}
+}
+
 // Actualiza todo lo relacionado al jugador en el loop del juego
 void Submarino::actualizar()
 {

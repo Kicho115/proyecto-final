@@ -219,6 +219,7 @@ void Juego::actualizarJuego()
 	actualizarNivel();
 	if (nivel->getNivel() != 0)
 	{
+		submarino->colision();
 		submarino->actualizar();
 		actualizarGUI();
 		actualizarEnemigos();

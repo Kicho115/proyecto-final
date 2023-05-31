@@ -59,6 +59,7 @@ public:
 	
 	void actualizarBala(); // Mueve a la bala a traves de la pantalla y la elimina al salir de ella
 	void actualizarAtaque(); // Añade cooldown al ataque
+	void colision(); // Revisa colisiones con los bordes de la ventana
 	void actualizar(); // Actualiza todo lo relacionado al jugador en el loop del juego
 
 	void renderBala(sf::RenderTarget* target); // Renderiza la bala
