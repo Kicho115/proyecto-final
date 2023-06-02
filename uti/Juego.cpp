@@ -289,4 +289,304 @@ void Juego::render()
 
 	// Mostrar el fotograma actual
 	window->display();
+<<<<<<< HEAD
 }
+
+void Juego::ending()
+{
+
+		sf::RenderWindow window(sf::VideoMode(1920, 1080), "Image Fade", sf::Style::Fullscreen);
+
+		sf::Music music;
+		if (!music.openFromFile("recursos/audio/EndingTheme.wav"))
+		{
+			// Por si no carga el archivo de sonido
+			return;
+		}
+		music.play();
+
+		sf::Texture texture1;
+		if (!texture1.loadFromFile("recursos/imagenes/Ending1.png"))
+		{
+			return;
+		}
+
+		sf::Texture texture2;
+		if (!texture2.loadFromFile("recursos/imagenes/Ending2.png"))
+		{
+			return;
+		}
+
+		sf::Sprite sprite(texture1);
+
+		sf::Clock clock;
+		float fadeDuration = 7.0f; // Duración total de fundido en segundos
+		float fadeInDuration = 7.0f; // Duración de fundido de entrada en segundos
+		float fadeTimer = 0.0f;
+		float fadeSpeed = 255.0f / fadeInDuration;
+
+		while (window.isOpen())
+		{
+			sf::Event event;
+			while (window.pollEvent(event))
+			{
+				if (event.type == sf::Event::Closed)
+					window.close();
+
+			// Cerrar ventana al presionar tecla escape
+			if (event.Event::KeyPressed && event.sf::Event::key.code == sf::Keyboard::Escape)
+					window.close();
+			}
+
+			// Actualizar el temporizador de fundido
+			float deltaTime = clock.restart().asSeconds();
+			fadeTimer += deltaTime;
+
+			// Calcular el valor actual de alpha en función del temporizador de fundido y la velocidad
+			float alpha = 0.0f;
+			if (fadeTimer <= fadeInDuration)
+			{
+				alpha = fadeTimer * fadeSpeed;
+			}
+			else if (fadeTimer <= fadeDuration)
+			{
+				alpha = 255.0f;
+			}
+			else
+			{
+				alpha = 255.0f - ((fadeTimer - fadeDuration) * fadeSpeed);
+			}
+
+			// Acotar el valor de alpha entre 0 y 255
+			alpha = std::max(0.0f, std::min(alpha, 255.0f));
+
+			// Establecer el valor de alpha en el color del sprite
+			sf::Color spriteColor = sprite.getColor();
+			spriteColor.a = static_cast<sf::Uint8>(alpha);
+			sprite.setColor(spriteColor);
+
+			// Comprobar si el fundido ha terminado
+			if (fadeTimer >= fadeDuration + fadeInDuration)
+			{
+				sprite.setTexture(texture2); // Cambiar la textura del sprite a la segunda imagen
+				sprite.setColor(sf::Color(255, 255, 255, 255)); // Restaurar la opacidad completa
+				fadeTimer = 0.0f; // Reiniciar el temporizador para la segunda imagen
+			}
+
+			window.clear();
+			window.draw(sprite);
+			window.display();
+		}
+	}
+
+void Juego::cine2()
+{
+	sf::RenderWindow window(sf::VideoMode(1920, 1080), "Cambio de imágenes");
+
+	// Cargar las texturas de las imágenes
+	sf::Texture image1Texture;
+	if (!image1Texture.loadFromFile("recursos/imagenes/Lore1.png"))
+	{
+		std::cout << "Error al cargar Lore1.png" << std::endl;
+		return;
+	}
+
+	sf::Texture image2Texture;
+	if (!image2Texture.loadFromFile("recursos/imagenes/Lore2.png"))
+	{
+		std::cout << "Error al cargar Lore2.png" << std::endl;
+		return;
+	}
+
+	sf::Texture image3Texture;
+	if (!image3Texture.loadFromFile("recursos/imagenes/Lore3.png"))
+	{
+		std::cout << "Error al cargar Lore3.png" << std::endl;
+		return;
+	}
+
+	sf::Texture image4Texture;
+	if (!image4Texture.loadFromFile("recursos/imagenes/Lore4.png"))
+	{
+		std::cout << "Error al cargar black.png" << std::endl;
+		return;
+	}
+
+	// Cargar las texturas de las imágenes adicionales
+	sf::Texture image5Texture;
+	if (!image5Texture.loadFromFile("recursos/imagenes/Lore5.png"))
+	{
+		std::cout << "Error al cargar image5.png" << std::endl;
+		return;
+	}
+
+	sf::Texture image6Texture;
+	if (!image6Texture.loadFromFile("recursos/imagenes/Lore6.png"))
+	{
+		std::cout << "Error al cargar image6.png" << std::endl;
+		return;
+	}
+
+	sf::Texture image7Texture;
+	if (!image7Texture.loadFromFile("recursos/imagenes/Lore7.png"))
+	{
+		std::cout << "Error al cargar image7.png" << std::endl;
+		return;
+	}
+
+	sf::Texture image8Texture;
+	if (!image8Texture.loadFromFile("recursos/imagenes/Lore8.png"))
+	{
+		std::cout << "Error al cargar image8.png" << std::endl;
+		return;
+	}
+
+	sf::Texture image9Texture;
+	if (!image9Texture.loadFromFile("recursos/imagenes/Lore9.png"))
+	{
+		std::cout << "Error al cargar image9.png" << std::endl;
+		return;
+	}
+
+	// Crear el sprite inicial con la imagen1
+	sf::Sprite sprite(image1Texture);
+
+	// Arreglo de texturas
+	sf::Texture textures[] = { image1Texture, image2Texture, image3Texture, image4Texture,
+							   image5Texture, image6Texture, image7Texture, image8Texture, image9Texture };
+	int currentTextureIndex = 0;
+
+	// Variables para controlar el tiempo
+	sf::Clock clock;
+	float elapsedTime = 0.0f;
+	float changeTime = 10.0f; // Cambiar la imagen después de x segundos
+
+	// Bucle principal
+	while (window.isOpen())
+	{
+		// Manejo de eventos
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+				window.close();
+			// Cerrar ventana al presionar tecla escape
+			if (event.Event::KeyPressed && event.sf::Event::key.code == sf::Keyboard::Space)
+				window.close();
+		}
+
+
+		// Actualizar el tiempo transcurrido
+		elapsedTime += clock.restart().asSeconds();
+
+		// Verificar si ha pasado el tiempo suficiente para cambiar la imagen
+		if (elapsedTime >= changeTime)
+		{
+			// Cambiar la imagen al siguiente índice del arreglo de texturas
+			currentTextureIndex = (currentTextureIndex + 1) % 9;
+			sprite.setTexture(textures[currentTextureIndex]);
+
+			// Reiniciar el tiempo transcurrido
+			elapsedTime = 0.0f;
+		}
+
+		// Limpiar la ventana
+		window.clear();
+
+		// Dibujar el sprite en la ventana
+		window.draw(sprite);
+
+		// Mostrar la ventana
+		window.display();
+	}
+}
+
+void Juego::donkey()
+{
+	sf::RenderWindow window(sf::VideoMode(1920, 1080), "Image Fade");
+
+	sf::SoundBuffer buffer;
+	if (!buffer.loadFromFile("recursos/audio/IntroTheme.wav"))
+	{
+		// Por si no carga el archivo de sonido
+	}
+
+	sf::Sound sound;
+	sound.setBuffer(buffer);
+	sound.play();
+
+	sf::Texture texture1;
+	if (!texture1.loadFromFile("recursos/imagenes/Donkey logo.png"))
+	{
+		return;
+	}
+
+	sf::Texture texture2;
+	
+	texture2.loadFromFile("recursos/imagenes/Tocho.png");
+
+	sf::Sprite sprite(texture1);
+
+	sf::Clock clock;
+	float fadeDuration = 7.0f; // Duración total de fundido en segundos
+	float fadeInDuration = 7.0f; // Duración de fundido de entrada en segundos
+	float fadeTimer = 0.0f;
+	float fadeSpeed = 255.0f / fadeInDuration;
+
+	while (window.isOpen())
+	{
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+				window.close();
+			// Cerrar ventana al presionar tecla escape
+			if (event.Event::KeyPressed && event.sf::Event::key.code == sf::Keyboard::Enter)
+				window.close();
+		}
+
+		// Actualizar el temporizador de fundido
+		float deltaTime = clock.restart().asSeconds();
+		fadeTimer += deltaTime;
+
+		// Calcular el valor actual de alpha en función del temporizador de fundido y la velocidad
+		float alpha = 0.0f;
+		if (fadeTimer <= fadeInDuration)
+		{
+			alpha = fadeTimer * fadeSpeed;
+		}
+		else if (fadeTimer <= fadeDuration)
+		{
+			alpha = 255.0f;
+		}
+		else
+		{
+			alpha = 255.0f - ((fadeTimer - fadeDuration) * fadeSpeed);
+		}
+
+		// Acotar el valor de alpha entre 0 y 255
+		alpha = std::max(0.0f, std::min(alpha, 255.0f));
+
+		// Establecer el valor de alpha en el color del sprite
+		sf::Color spriteColor = sprite.getColor();
+		spriteColor.a = static_cast<sf::Uint8>(alpha);
+		sprite.setColor(spriteColor);
+
+		// Comprobar si el fundido ha terminado
+		if (fadeTimer >= fadeDuration + fadeInDuration)
+		{
+			sprite.setTexture(texture2); // Cambiar la textura del sprite a la segunda imagen
+			sprite.setColor(sf::Color(255, 255, 255, 255)); // Restaurar la opacidad completa
+			fadeTimer = 0.0f; // Reiniciar el temporizador para la segunda imagen
+		}
+
+		window.clear();
+		window.draw(sprite);
+		window.display();
+	}
+}
+
+
+=======
+}
+>>>>>>> parent of d815e26 (Cambios)

@@ -71,5 +71,13 @@ public:
 
 	void renderGUI();
 	void render();
+<<<<<<< HEAD
+
+	// Sebas
+	void ending();
+	void cine2();
+	void donkey();
+=======
+>>>>>>> parent of d815e26 (Cambios)
 };
 
