@@ -7,7 +7,7 @@
 #include <sstream>
 
 /*
-	Clase que actua como motor de juego. 
+	Clase que actua como motor de juego.
 	- Aqui se actualiza y renderiza todo.
 */
 
@@ -24,6 +24,7 @@ private:
 	Nivel* nivel;
 
 	int pecesAsesinados;
+	int pecesMeta;
 
 	// Enemigos
 	float tiempoSpawnEnemigoMax;
@@ -71,13 +72,9 @@ public:
 
 	void renderGUI();
 	void render();
-<<<<<<< HEAD
 
 	// Sebas
 	void ending();
 	void cine2();
 	void donkey();
-=======
->>>>>>> parent of d815e26 (Cambios)
 };
-

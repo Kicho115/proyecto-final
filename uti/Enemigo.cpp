@@ -6,7 +6,7 @@ void Enemigo::initVariables(int tipo)
 
 	spriteInvertido = false;
 	vida = vidaMax;
-	
+
 	switch (tipo)
 	{
 	case 1:
@@ -17,15 +17,15 @@ void Enemigo::initVariables(int tipo)
 		break;
 	case 2:
 		vidaMax = 100;
-		ataque = 20;
+		ataque = 15;
 		puntos = 20;
 		velocidad = 5.f;
 		break;
 	case 3:
 		vidaMax = 200;
-		ataque = 30;
+		ataque = 20;
 		puntos = 30;
-		velocidad = 10.f;
+		velocidad = 7.f;
 		break;
 	default:
 		std::cout << "Error: No se ha podido inicializar las variables de la clase Enemigo\n";
@@ -118,15 +118,15 @@ void Enemigo::movimiento(Submarino* submarino)
 		}
 		sprite.move(-1.f * velocidad, 0.f);
 	}
-	
+
 	// Seguir submarino hacia arriba
 	if (submarino->getPos().y < getPos().y)
 		sprite.move(0.f, -1.f * velocidad);
-	
+
 	// Seguir submarino hacia abajo
 	if (submarino->getPos().y > getPos().y)
 		sprite.move(0.f, 1.f * velocidad);
-		
+
 }
 
 void Enemigo::render(sf::RenderTarget* target)

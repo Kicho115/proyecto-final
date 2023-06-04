@@ -17,7 +17,7 @@ void Juego::initWindow()
 void Juego::initGUI()
 {
 	// Cargar fuente
-	if(!fuente.loadFromFile("recursos/fuentes/fuente.otf"))
+	if (!fuente.loadFromFile("recursos/fuentes/fuente.otf"))
 		std::cout << "Error: No se ha cargado la fuente del texto en clase juego";
 
 	// Inicializar texto de los puntos del submarino
@@ -60,6 +60,7 @@ void Juego::initNivel()
 {
 	nivel = new Nivel(0);
 	pecesAsesinados = 0;
+	pecesMeta = 0;
 }
 
 void Juego::initSubmarino()
@@ -82,7 +83,7 @@ Juego::~Juego()
 	delete window;
 	delete submarino;
 	delete nivel;
-	
+
 	// Borrar enemigos en vector
 	for (auto* i : enemigos)
 	{
@@ -103,6 +104,11 @@ void Juego::run()
 
 		// Funcion que dibuja en la ventana
 		render();
+
+		if (nivel->getNivel() == 4)
+		{
+			return;
+		}
 	}
 }
 
@@ -128,6 +134,7 @@ void Juego::actualizarNivel()
 	{
 		nivel->setNivel(1);
 		nivel->initNivel(1);
+		pecesMeta = 20;
 	}
 	else if (nivel->getNivel() == 1 && pecesAsesinados == 20)
 	{
@@ -135,6 +142,7 @@ void Juego::actualizarNivel()
 		nivel->initNivel(2);
 
 		enemigos.clear();
+		pecesMeta = 50;
 		submarino->setVida(100);
 
 	}
@@ -144,7 +152,15 @@ void Juego::actualizarNivel()
 		nivel->initNivel(3);
 
 		enemigos.clear();
-		submarino->setVida(100);
+		pecesMeta = 90;
+		submarino->setVida(200);
+	}
+	else if (nivel->getNivel() == 3 && pecesAsesinados == 90)
+	{
+		nivel->setNivel(4);
+		nivel->initNivel(4);
+
+		enemigos.clear();
 	}
 
 }
@@ -182,33 +198,33 @@ void Juego::actualizarEnemigos()
 			// Delete enemigo si toca el submarino
 			delete enemigos.at(cont);
 			enemigos.erase(enemigos.begin() + cont);
-	
+
 			std::cout << enemigos.size() << "\n";
 		}
-		
-			// Eliminar enemigo y bala si intersectan
-			for (int i = 0; i < enemigos.size(); i++)
+
+		// Eliminar enemigo y bala si intersectan
+		for (int i = 0; i < enemigos.size(); i++)
+		{
+			bool enemigoMuerto = false;
+
+			for (size_t j = 0; j < submarino->getBalasVector().size() && !enemigoMuerto; j++)
 			{
-				bool enemigoMuerto = false;
-
-				for (size_t j = 0; j < submarino->getBalasVector().size() && !enemigoMuerto; j++)
+				if (enemigos[i]->getBounds().intersects(submarino->getBalasVector()[j]->getBounds()))
 				{
-					if (enemigos[i]->getBounds().intersects(submarino->getBalasVector()[j]->getBounds()))
-					{
-						enemigoMuertoSonido.play();
-						submarino->setPuntos(enemigos[i]->getPuntos());
+					enemigoMuertoSonido.play();
+					submarino->setPuntos(enemigos[i]->getPuntos());
 
-						delete enemigos[i];
-						enemigos.erase(enemigos.begin() + i);
-						//std::cout << "Enemigo eliminado\n";
+					delete enemigos[i];
+					enemigos.erase(enemigos.begin() + i);
+					//std::cout << "Enemigo eliminado\n";
 
-						submarino->setBalasVector(j); // Eliminar balas
-						//std::cout << "Sub eliminado\n";
-						enemigoMuerto = true;
-						pecesAsesinados++;
-					}
+					submarino->setBalasVector(j); // Eliminar balas
+					//std::cout << "Sub eliminado\n";
+					enemigoMuerto = true;
+					pecesAsesinados++;
 				}
 			}
+		}
 		++cont;
 	}
 
@@ -219,7 +235,7 @@ void Juego::actualizarGUI()
 	std::stringstream ss;
 	// Actualizar string de puntos
 	ss << "Points: " << submarino->getPuntos()
-		<< "\nHp: " << "\nPeces cazados: " << pecesAsesinados << " / " << "20";
+		<< "\nHp: " << "\nPeces cazados: " << pecesAsesinados << " / " << pecesMeta;
 
 	// Mostrar puntos en pantalla
 	puntos.setString(ss.str());
@@ -289,95 +305,94 @@ void Juego::render()
 
 	// Mostrar el fotograma actual
 	window->display();
-<<<<<<< HEAD
 }
 
 void Juego::ending()
 {
 
-		sf::RenderWindow window(sf::VideoMode(1920, 1080), "Image Fade", sf::Style::Fullscreen);
+	sf::RenderWindow window(sf::VideoMode(1920, 1080), "Image Fade", sf::Style::Fullscreen);
 
-		sf::Music music;
-		if (!music.openFromFile("recursos/audio/EndingTheme.wav"))
+	sf::Music music;
+	if (!music.openFromFile("recursos/audio/EndingTheme.wav"))
+	{
+		// Por si no carga el archivo de sonido
+		return;
+	}
+	music.play();
+
+	sf::Texture texture1;
+	if (!texture1.loadFromFile("recursos/imagenes/Ending1.png"))
+	{
+		return;
+	}
+
+	sf::Texture texture2;
+	if (!texture2.loadFromFile("recursos/imagenes/Ending2.png"))
+	{
+		return;
+	}
+
+	sf::Sprite sprite(texture1);
+
+	sf::Clock clock;
+	float fadeDuration = 7.0f; // Duración total de fundido en segundos
+	float fadeInDuration = 7.0f; // Duración de fundido de entrada en segundos
+	float fadeTimer = 0.0f;
+	float fadeSpeed = 255.0f / fadeInDuration;
+
+	while (window.isOpen())
+	{
+		sf::Event event;
+		while (window.pollEvent(event))
 		{
-			// Por si no carga el archivo de sonido
-			return;
-		}
-		music.play();
-
-		sf::Texture texture1;
-		if (!texture1.loadFromFile("recursos/imagenes/Ending1.png"))
-		{
-			return;
-		}
-
-		sf::Texture texture2;
-		if (!texture2.loadFromFile("recursos/imagenes/Ending2.png"))
-		{
-			return;
-		}
-
-		sf::Sprite sprite(texture1);
-
-		sf::Clock clock;
-		float fadeDuration = 7.0f; // Duración total de fundido en segundos
-		float fadeInDuration = 7.0f; // Duración de fundido de entrada en segundos
-		float fadeTimer = 0.0f;
-		float fadeSpeed = 255.0f / fadeInDuration;
-
-		while (window.isOpen())
-		{
-			sf::Event event;
-			while (window.pollEvent(event))
-			{
-				if (event.type == sf::Event::Closed)
-					window.close();
+			if (event.type == sf::Event::Closed)
+				window.close();
 
 			// Cerrar ventana al presionar tecla escape
 			if (event.Event::KeyPressed && event.sf::Event::key.code == sf::Keyboard::Escape)
-					window.close();
-			}
-
-			// Actualizar el temporizador de fundido
-			float deltaTime = clock.restart().asSeconds();
-			fadeTimer += deltaTime;
-
-			// Calcular el valor actual de alpha en función del temporizador de fundido y la velocidad
-			float alpha = 0.0f;
-			if (fadeTimer <= fadeInDuration)
-			{
-				alpha = fadeTimer * fadeSpeed;
-			}
-			else if (fadeTimer <= fadeDuration)
-			{
-				alpha = 255.0f;
-			}
-			else
-			{
-				alpha = 255.0f - ((fadeTimer - fadeDuration) * fadeSpeed);
-			}
-
-			// Acotar el valor de alpha entre 0 y 255
-			alpha = std::max(0.0f, std::min(alpha, 255.0f));
-
-			// Establecer el valor de alpha en el color del sprite
-			sf::Color spriteColor = sprite.getColor();
-			spriteColor.a = static_cast<sf::Uint8>(alpha);
-			sprite.setColor(spriteColor);
-
-			// Comprobar si el fundido ha terminado
-			if (fadeTimer >= fadeDuration + fadeInDuration)
-			{
-				sprite.setTexture(texture2); // Cambiar la textura del sprite a la segunda imagen
-				sprite.setColor(sf::Color(255, 255, 255, 255)); // Restaurar la opacidad completa
-				fadeTimer = 0.0f; // Reiniciar el temporizador para la segunda imagen
-			}
-
-			window.clear();
-			window.draw(sprite);
-			window.display();
+				window.close();
 		}
+
+		// Actualizar el temporizador de fundido
+		float deltaTime = clock.restart().asSeconds();
+		fadeTimer += deltaTime;
+
+		// Calcular el valor actual de alpha en función del temporizador de fundido y la velocidad
+		float alpha = 0.0f;
+		if (fadeTimer <= fadeInDuration)
+		{
+			alpha = fadeTimer * fadeSpeed;
+		}
+		else if (fadeTimer <= fadeDuration)
+		{
+			alpha = 255.0f;
+		}
+		else
+		{
+			alpha = 255.0f - ((fadeTimer - fadeDuration) * fadeSpeed);
+		}
+
+		// Acotar el valor de alpha entre 0 y 255
+		alpha = std::max(0.0f, std::min(alpha, 255.0f));
+
+		// Establecer el valor de alpha en el color del sprite
+		sf::Color spriteColor = sprite.getColor();
+		spriteColor.a = static_cast<sf::Uint8>(alpha);
+		sprite.setColor(spriteColor);
+
+		// Comprobar si el fundido ha terminado
+		if (fadeTimer >= fadeDuration + fadeInDuration)
+		{
+			sprite.setTexture(texture2); // Cambiar la textura del sprite a la segunda imagen
+			sprite.setColor(sf::Color(255, 255, 255, 255)); // Restaurar la opacidad completa
+			fadeTimer = 0.0f; // Reiniciar el temporizador para la segunda imagen
+		}
+
+		window.clear();
+		window.draw(sprite);
+		window.display();
 	}
+}
 
 void Juego::cine2()
 {
@@ -522,7 +537,7 @@ void Juego::donkey()
 	}
 
 	sf::Texture texture2;
-	
+
 	texture2.loadFromFile("recursos/imagenes/Tocho.png");
 
 	sf::Sprite sprite(texture1);
@@ -585,8 +600,3 @@ void Juego::donkey()
 		window.display();
 	}
 }
-
-
-=======
-}
->>>>>>> parent of d815e26 (Cambios)

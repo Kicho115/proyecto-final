@@ -203,10 +203,10 @@ void Submarino::actualizarBala()
 		bala->movimiento();
 
 		// Si la bala se sale de los limites de la ventana
-		if (bala->getBounds().left >  1920.f || bala->getBounds().left + bala->getBounds().width < 0.f)
+		if (bala->getBounds().left > 1920.f || bala->getBounds().left + bala->getBounds().width < 0.f)
 		{
 			// Elimina la bala en la posicion cont del vector
-			delete balas.at(cont); 
+			delete balas.at(cont);
 			balas.erase(balas.begin() + cont);
 			--cont;
 

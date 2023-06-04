@@ -23,19 +23,13 @@ void Nivel::initNivel(int nivel)
 		if (!backgroundTexture.loadFromFile("recursos/imagenes/fondo1.png"))
 			std::cout << "Error: No se pudo cargar el background del nivel 1.\n";
 		// Inicializa la musica
-<<<<<<< HEAD
 		if (!music.openFromFile("recursos/audio/Decoherence.wav"))
 			std::cout << "Error: No se pudo cargar la musica del nivel 1.\n";
 		music.setPlayingOffset(sf::seconds(300.f)); // Avanzar 20 segundos
-=======
-		if (!music.openFromFile("recursos/audio/musicMenu.wav"))
-			std::cout << "Error: No se pudo cargar la musica del nivel 0.\n";
->>>>>>> parent of d815e26 (Cambios)
 		break;
 	case 2:
 		// Inicializa la textura del background
 		if (!backgroundTexture.loadFromFile("recursos/imagenes/fondo2.png"))
-<<<<<<< HEAD
 			std::cout << "Error: No se pudo cargar el background del nivel 2.\n";
 		if (!music.openFromFile("recursos/audio/Decoherence.wav"))
 			std::cout << "Error: No se pudo cargar la musica del nivel 1.\n";
@@ -50,9 +44,6 @@ void Nivel::initNivel(int nivel)
 		break;
 	case 4:
 		music.stop();
-=======
-			std::cout << "Error: No se pudo cargar el background del nivel 0.\n";
->>>>>>> parent of d815e26 (Cambios)
 		break;
 	default:
 		break;

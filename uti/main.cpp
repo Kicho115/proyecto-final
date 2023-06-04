@@ -13,14 +13,13 @@ int main()
 
 	Juego juego;
 
-<<<<<<< HEAD
 	juego.donkey();
-	
+
 	juego.cine2();
 
-=======
->>>>>>> parent of d815e26 (Cambios)
 	juego.run();
 
-    return 0;
+	juego.ending();
+
+	return 0;
 }
